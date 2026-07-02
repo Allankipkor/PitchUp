@@ -13,7 +13,6 @@ L.Icon.Default.mergeOptions({
 export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequired }) {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [viewMode, setViewMode] = useState('list'); // 'list' or 'map' (for mobile responsive toggling)
   
   // Filters
   const [format, setFormat] = useState('');
@@ -219,7 +218,7 @@ export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequire
   return (
     <div className="browse-layout">
       {/* Search and List Sidebar */}
-      <div className={`sidebar-container ${viewMode === 'map' ? 'hidden' : ''}`}>
+      <div className="sidebar-container">
         <div className="filter-bar">
           <div className="filter-row">
             <div className="filter-group">
@@ -336,22 +335,6 @@ export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequire
         </button>
         <button className="floating-add-game-btn" onClick={triggerPostGame} title="Host Pickup Game">
           ➕
-        </button>
-      </div>
-
-      {/* Mobile Toggle Bar */}
-      <div className="mobile-view-toggle">
-        <button 
-          className={`mobile-toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
-          onClick={() => setViewMode('list')}
-        >
-          List view
-        </button>
-        <button 
-          className={`mobile-toggle-btn ${viewMode === 'map' ? 'active' : ''}`}
-          onClick={() => setViewMode('map')}
-        >
-          Map view
         </button>
       </div>
     </div>

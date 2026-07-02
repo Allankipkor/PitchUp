@@ -1132,30 +1132,55 @@ button, input, select, textarea {
 /* Media Queries for Mobile Screens (Mobile-First responsive corrections) */
 @media (max-width: 768px) {
   .browse-layout {
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - var(--header-height));
   }
   
   .sidebar-container {
-    width: 100%;
+    width: 44%;
+    max-width: 320px;
+    min-width: 165px;
     height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
+    transform: none;
+    border-right: 2px solid var(--border-color);
     border-left: none;
-    transform: translateY(0);
-  }
-  
-  .sidebar-container.hidden {
-    transform: translateY(100%);
-    pointer-events: none;
   }
   
   .map-container-wrapper {
+    flex: 1;
     height: 100%;
   }
 
   .mobile-view-toggle {
-    display: flex;
+    display: none !important;
+  }
+
+  /* Stack filters vertically in sidebar on mobile/tablet screen widths */
+  .filter-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .filter-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  .btn-post-game {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* Ensure card sizing and text fits well on small splits */
+  .game-card-title {
+    font-size: 13px !important;
+  }
+
+  .spots-badge {
+    font-size: 10px !important;
   }
   
   .form-grid {
@@ -1327,11 +1352,6 @@ button, input, select, textarea {
 @media (max-width: 768px) {
   .floating-add-game-btn {
     display: flex; /* Show only on mobile screens */
-  }
-
-  /* Shift bottom controls to the absolute bottom (safe-area-aware) on mobile */
-  .mobile-view-toggle {
-    bottom: calc(20px + env(safe-area-inset-bottom)) !important;
   }
 
   .near-me-btn {
