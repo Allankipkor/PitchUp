@@ -9,3 +9,4 @@ apscheduler
 resend
 python-multipart
 email-validator
+psycopg2-binary
