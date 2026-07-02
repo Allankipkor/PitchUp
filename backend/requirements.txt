@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic
+pydantic-settings
+httpx
+pyjwt
+apscheduler
+resend
+python-multipart
+email-validator
