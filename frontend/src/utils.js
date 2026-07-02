@@ -1,8 +1,10 @@
 let API_BASE = import.meta.env.VITE_API_URL;
 
 if (!API_BASE) {
-  // Safe fallback: if running on Vercel/production, auto-route to live Render backend
-  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+  const isCapacitor = typeof window !== 'undefined' && (!!window.Capacitor || !!window.webkit?.messageHandlers?.Capacitor);
+  
+  // If running in production (Vercel) OR inside the native mobile app wrapper
+  if (isCapacitor || (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')) {
     API_BASE = 'https://pitchup-yc95.onrender.com/api';
   } else {
     API_BASE = 'http://localhost:8000/api';
