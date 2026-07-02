@@ -25,11 +25,24 @@ allowed_origins = [url.strip().rstrip("/") for url in FRONTEND_URL_ENV.split(","
 # Always allow local development URL
 if "http://localhost:5173" not in allowed_origins:
     allowed_origins.append("http://localhost:5173")
+if "http://localhost:5173/" not in allowed_origins:
+    allowed_origins.append("http://localhost:5173/")
 
 # Allow Capacitor native app origins (Android and iOS)
-for native_origin in ["http://localhost", "capacitor://localhost"]:
+for native_origin in ["http://localhost", "capacitor://localhost", "http://localhost/", "capacitor://localhost/"]:
     if native_origin not in allowed_origins:
         allowed_origins.append(native_origin)
+
+# Also ensure Vercel frontend has trailing slash allowed
+vercel_origins = []
+for origin in allowed_origins:
+    if "vercel.app" in origin:
+        slash = origin if origin.endswith("/") else f"{origin}/"
+        noslash = origin.rstrip("/")
+        vercel_origins.extend([noslash, slash])
+for o in vercel_origins:
+    if o not in allowed_origins:
+        allowed_origins.append(o)
 
 print(f"CORS Allowed Origins: {allowed_origins}")
 
