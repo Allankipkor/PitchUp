@@ -1329,30 +1329,8 @@ button, input, select, textarea {
     display: flex; /* Show only on mobile screens */
   }
 
-  .app-header .app-nav {
-    display: none !important; /* Hide top nav links on tablet/mobile */
-  }
-
-  .app-bottom-nav {
-    display: flex; /* Show bottom nav bar on mobile */
-  }
-
-  /* Make sure content doesn't get covered by bottom nav on non-browse pages */
-  .main-content {
-    margin-bottom: 60px;
-  }
-
-  /* Default toggle button placement when bottom nav is present (on other pages if MapBrowse is ever reused, though currently MapBrowse is only on browse page) */
-  .mobile-view-toggle {
-    bottom: 80px !important;
-  }
-
-  /* --- HIDE HEADER/FOOTER NEW BEHAVIOR FOR MOBILE BROWSE VIEW --- */
+  /* --- HIDE HEADER NEW BEHAVIOR FOR MOBILE BROWSE VIEW --- */
   .hide-header-mobile .app-header {
-    display: none !important;
-  }
-
-  .hide-header-mobile .app-bottom-nav {
     display: none !important;
   }
 
@@ -1512,62 +1490,4 @@ button, input, select, textarea {
 
 .profile-btn-mobile:active {
   border-color: var(--accent);
-}
-
-/* Bottom Navigation Bar for Mobile */
-.app-bottom-nav {
-  display: none; /* Hidden on desktop */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: calc(60px + env(safe-area-inset-bottom));
-  background-color: var(--bg-secondary);
-  border-top: 2px solid var(--border-color);
-  z-index: 1000;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 10px env(safe-area-inset-bottom) 10px;
-}
-
-.bottom-nav-link {
-  background: none;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  width: 30%;
-  height: 100%;
-  gap: 4px;
-  font-family: var(--font-body);
-}
-
-.bottom-nav-link.active {
-  color: var(--accent);
-}
-
-.bottom-nav-icon {
-  font-size: 20px;
-  position: relative;
-  display: inline-block;
-}
-
-.bottom-nav-badge {
-  position: absolute;
-  top: -6px;
-  right: -10px;
-  background-color: var(--danger);
-  color: #fff;
-  font-size: 9px;
-  font-weight: bold;
-  padding: 1px 4px;
-  border-radius: 10px;
-  min-width: 14px;
-  text-align: center;
 }
