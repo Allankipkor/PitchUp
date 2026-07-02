@@ -1337,15 +1337,181 @@ button, input, select, textarea {
     display: flex; /* Show bottom nav bar on mobile */
   }
 
-  /* Make sure content doesn't get covered by bottom nav */
+  /* Make sure content doesn't get covered by bottom nav on non-browse pages */
   .main-content {
     margin-bottom: 60px;
   }
 
-  /* Shift the Map list-view/map-view toggle higher so it doesn't overlap bottom nav */
+  /* Default toggle button placement when bottom nav is present (on other pages if MapBrowse is ever reused, though currently MapBrowse is only on browse page) */
   .mobile-view-toggle {
     bottom: 80px !important;
   }
+
+  /* --- HIDE HEADER/FOOTER NEW BEHAVIOR FOR MOBILE BROWSE VIEW --- */
+  .hide-header-mobile .app-header {
+    display: none !important;
+  }
+
+  .hide-header-mobile .app-bottom-nav {
+    display: none !important;
+  }
+
+  .hide-header-mobile .main-content {
+    margin-bottom: 0 !important;
+  }
+
+  /* Shift bottom controls to the absolute bottom (safe-area-aware) when nav bars are hidden */
+  .hide-header-mobile .mobile-view-toggle {
+    bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .hide-header-mobile .near-me-btn {
+    bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .hide-header-mobile .floating-add-game-btn {
+    bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+  }
+
+  /* Ensure touch target sizes on mobile are at least 44px */
+  .form-input, 
+  .form-select, 
+  .form-textarea, 
+  .btn-submit, 
+  .btn-cancel, 
+  .btn-post-game, 
+  .btn-lookup, 
+  .profile-btn {
+    min-height: 44px;
+  }
+
+  /* Make sure floating button in map container works edge-to-edge layout */
+  .browse-layout {
+    height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+}
+
+/* Floating Hamburger Button on Mobile Browse View */
+.mobile-hamburger-btn {
+  display: none; /* Hidden on desktop */
+}
+
+@media (max-width: 768px) {
+  .hide-header-mobile .mobile-hamburger-btn {
+    display: flex;
+    position: fixed;
+    top: calc(16px + env(safe-area-inset-top));
+    right: 16px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-size: 22px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1005; /* Float on top of maps/popups */
+    box-shadow: var(--shadow-neon-intense);
+    transition: transform var(--transition-speed);
+  }
+  
+  .hide-header-mobile .mobile-hamburger-btn:active {
+    transform: scale(0.9);
+  }
+}
+
+/* Mobile Slide-Out Navigation Menu Overlay */
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobile-nav-menu {
+  background-color: var(--bg-secondary);
+  width: 290px;
+  height: 100%;
+  border-left: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom)) 20px;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+  animation: slideInMobileMenu 0.25s ease-out;
+}
+
+@keyframes slideInMobileMenu {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.mobile-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.mobile-nav-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+.mobile-nav-item {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: left;
+  padding: 12px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  transition: all var(--transition-speed);
+}
+
+.mobile-nav-item:active, .mobile-nav-item.active {
+  color: var(--accent);
+  background-color: var(--bg-tertiary);
+  border-left: 3px solid var(--accent);
+}
+
+.profile-btn-mobile {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  padding: 12px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.profile-btn-mobile:active {
+  border-color: var(--accent);
 }
 
 /* Bottom Navigation Bar for Mobile */
@@ -1355,13 +1521,13 @@ button, input, select, textarea {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: calc(60px + env(safe-area-inset-bottom));
   background-color: var(--bg-secondary);
   border-top: 2px solid var(--border-color);
   z-index: 1000;
   justify-content: space-around;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 10px env(safe-area-inset-bottom) 10px;
 }
 
 .bottom-nav-link {
