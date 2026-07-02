@@ -94,10 +94,25 @@ export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequire
       
       // Try to get user location on start
       locateUser(false); 
+
+      // Invalidate map size when container dimensions change (responsive rendering fix)
+      const resizeObserver = new ResizeObserver(() => {
+        if (mapInstance.current) {
+          mapInstance.current.invalidateSize();
+        }
+      });
+      if (mapRef.current) {
+        resizeObserver.observe(mapRef.current);
+      }
+
+      mapInstance.current._resizeObserver = resizeObserver;
     }
 
     return () => {
       // Cleanup on unmount
+      if (mapInstance.current && mapInstance.current._resizeObserver) {
+        mapInstance.current._resizeObserver.disconnect();
+      }
       if (mapInstance.current) {
         mapInstance.current.remove();
         mapInstance.current = null;
