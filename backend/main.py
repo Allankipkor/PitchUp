@@ -131,6 +131,12 @@ def request_magic_link(payload: schemas.MagicLinkRequest, db: Session = Depends(
     auth.send_magic_link_email(payload.email, token)
     return {"message": "Magic link sent successfully. Please check your inbox or server logs."}
 
+# Resolve cookie security values for cross-domain auth (Vercel to Render)
+# Production requires SameSite=None and Secure=True for cross-origin cookies to work
+IS_PRODUCTION = any(domain in FRONTEND_URL_ENV for domain in ["vercel.app", "onrender.com"]) or FRONTEND_URL_ENV.startswith("https")
+SAMESITE_COOKIE = "none" if IS_PRODUCTION else "lax"
+SECURE_COOKIE = True if IS_PRODUCTION else False
+
 @app.post("/api/auth/verify", response_model=schemas.UserOut)
 def verify_magic_link(payload: schemas.MagicLinkVerify, response: Response, db: Session = Depends(get_db)):
     """Verifies magic link token and sets session cookie."""
@@ -145,13 +151,13 @@ def verify_magic_link(payload: schemas.MagicLinkVerify, response: Response, db: 
     session_token = auth.create_session_token(user.id)
     
     # Set httpOnly cookie for JWT
-    # Secure=False for localhost dev, httponly=True to protect against XSS
+    # Secure=True in production, SameSite=None for cross-site cookie usage
     response.set_cookie(
         key="session_token",
         value=session_token,
         httponly=True,
-        samesite="lax",
-        secure=False,
+        samesite=SAMESITE_COOKIE,
+        secure=SECURE_COOKIE,
         max_age=auth.ACCESS_TOKEN_EXPIRE_MINUTES * 60
     )
     
@@ -160,7 +166,7 @@ def verify_magic_link(payload: schemas.MagicLinkVerify, response: Response, db: 
 @app.post("/api/auth/logout")
 def logout(response: Response):
     """Clears the session token cookie."""
-    response.delete_cookie("session_token", samesite="lax", secure=False)
+    response.delete_cookie("session_token", samesite=SAMESITE_COOKIE, secure=SECURE_COOKIE)
     return {"message": "Logged out successfully"}
 
 @app.get("/api/auth/me", response_model=schemas.UserOut)
