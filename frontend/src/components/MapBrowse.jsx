@@ -48,6 +48,27 @@ export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequire
       markersGroup.current = L.layerGroup().addTo(map);
       mapInstance.current = map;
       
+      // Fix mobile touch/click event interception in Leaflet popups
+      map.on('popupopen', (e) => {
+        const container = e.popup._container;
+        if (container) {
+          const button = container.querySelector('.popup-view-details-btn');
+          if (button) {
+            const handleSelect = (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              const gameId = button.getAttribute('data-game-id');
+              if (gameId) {
+                window.dispatchGameSelect(gameId);
+              }
+            };
+            button.onclick = handleSelect;
+            // Listen to touch events directly to bypass Leaflet click blocks on mobile
+            button.ontouchend = handleSelect;
+          }
+        }
+      });
+      
       // Try to get user location on start
       locateUser(false); 
     }
@@ -82,7 +103,7 @@ export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequire
                 <span style="font-weight:bold; font-size:12px; color: ${game.spots_remaining === 0 ? '#ff3b30' : '#34c759'}">
                   ${game.spots_remaining === 0 ? 'Full' : `${game.spots_remaining} left`}
                 </span>
-                <button onclick="window.dispatchGameSelect('${game.id}')" style="background:#bfff00; border:none; padding:4px 8px; font-weight:bold; font-size:11px; cursor:pointer; border-radius:3px; font-family: 'Oswald', sans-serif; text-transform:uppercase;">
+                <button class="popup-view-details-btn" data-game-id="${game.id}" style="background:#bfff00; border:none; padding:4px 8px; font-weight:bold; font-size:11px; cursor:pointer; border-radius:3px; font-family: 'Oswald', sans-serif; text-transform:uppercase;">
                   View Details
                 </button>
               </div>
