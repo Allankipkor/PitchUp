@@ -26,6 +26,11 @@ allowed_origins = [url.strip().rstrip("/") for url in FRONTEND_URL_ENV.split(","
 if "http://localhost:5173" not in allowed_origins:
     allowed_origins.append("http://localhost:5173")
 
+# Allow Capacitor native app origins (Android and iOS)
+for native_origin in ["http://localhost", "capacitor://localhost"]:
+    if native_origin not in allowed_origins:
+        allowed_origins.append(native_origin)
+
 print(f"CORS Allowed Origins: {allowed_origins}")
 
 # CORS Setup - Enable credentials for httpOnly cookies!
