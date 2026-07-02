@@ -248,6 +248,7 @@ export default function App() {
             {unreadCount > 0 && <span className="bottom-nav-badge">{unreadCount}</span>}
           </span>
           <span className="bottom-nav-label">Inbox</span>
+        </button>
       </nav>
 
       {/* FLOATING HAMBURGER MENU FOR MOBILE BROWSE VIEW */}
