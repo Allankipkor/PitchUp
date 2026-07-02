@@ -55,6 +55,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def log_request_headers(request: Request, call_next):
+    if request.method == "OPTIONS" or "magic-link" in str(request.url):
+        headers_dict = dict(request.headers)
+        print(f"[DEBUG CORS] Method: {request.method} | Path: {request.url.path} | Origin: {headers_dict.get('origin')} | Headers: {headers_dict}")
+    response = await call_next(request)
+    return response
+
 # Startup & Shutdown hooks for scheduler
 @app.on_event("startup")
 def on_startup():
