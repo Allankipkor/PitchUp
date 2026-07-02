@@ -20,7 +20,19 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440
 MAGIC_LINK_EXPIRE_MINUTES = 15
 
 RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173").rstrip("/")
+
+# Automatically fix common subdomain underscore typos for Vercel and Render hosts
+from urllib.parse import urlparse, urlunparse
+try:
+    parsed = urlparse(FRONTEND_URL)
+    if parsed.netloc and ("vercel.app" in parsed.netloc or "onrender.com" in parsed.netloc):
+        new_netloc = parsed.netloc.replace("_", "-")
+        parsed = parsed._replace(netloc=new_netloc)
+        FRONTEND_URL = urlunparse(parsed)
+except Exception:
+    pass
+
 
 # Initialize Resend
 if RESEND_API_KEY:
