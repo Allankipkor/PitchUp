@@ -74,7 +74,7 @@ export default function Auth({ onLoginSuccess, verifyToken }) {
             <div style={{ padding: '12px', background: 'var(--bg-tertiary)', border: '1px solid var(--accent)', borderRadius: '6px', fontSize: '13px' }}>
               <p style={{ color: 'var(--accent)', fontWeight: 'bold', marginBottom: '8px' }}>✓ Link Generated</p>
               <p style={{ color: 'var(--text-secondary)' }}>
-                For local testing: Check the backend terminal console output to copy and click the magic link!
+                {message}
               </p>
             </div>
             <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>

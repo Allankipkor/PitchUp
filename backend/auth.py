@@ -20,6 +20,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440
 MAGIC_LINK_EXPIRE_MINUTES = 15
 
 RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
+RESEND_FROM_EMAIL = os.getenv("RESEND_FROM_EMAIL", "PitchUp <onboarding@resend.dev>")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173").rstrip("/")
 
 # Automatically fix common subdomain underscore typos for Vercel and Render hosts
@@ -83,7 +84,7 @@ def send_magic_link_email(email: str, token: str):
         
     try:
         params = {
-            "from": "PitchUp <noreply@game-on-map.preview.emergentagent.com>", # Use emergent.sh default domain or generic
+            "from": RESEND_FROM_EMAIL,
             "to": [email],
             "subject": "Sign in to PitchUp",
             "html": f"""
