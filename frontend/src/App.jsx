@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { App as CapApp } from '@capacitor/app';
 import { authAPI, inboxAPI } from './utils';
 import MapBrowse from './components/MapBrowse';
 import ClubDirectory from './components/ClubDirectory';
@@ -25,6 +26,33 @@ export default function App() {
 
   // Unread notifications badge count
   const [unreadCount, setUnreadCount] = useState(0);
+
+  // Listen to deep links inside the native app (e.g. from magic link redirect)
+  useEffect(() => {
+    const handleUrlOpen = (event) => {
+      try {
+        const urlStr = event.url;
+        const parsedUrl = new URL(urlStr);
+        const token = parsedUrl.searchParams.get('token');
+        const gameId = parsedUrl.searchParams.get('game');
+        
+        if (token) {
+          setVerifyToken(token);
+          setActiveTab('auth');
+        } else if (gameId) {
+          setSelectedGameId(gameId);
+        }
+      } catch (err) {
+        console.error('Failed to parse deep link URL:', err);
+      }
+    };
+
+    CapApp.addListener('appUrlOpen', handleUrlOpen);
+
+    return () => {
+      CapApp.removeAllListeners();
+    };
+  }, []);
 
   // Parse URL queries on load (magic links and shared game listings)
   useEffect(() => {
