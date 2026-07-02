@@ -1170,3 +1170,114 @@ button, input, select, textarea {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* Extra Responsive Enhancements for Mobile Devices */
+@media (max-width: 576px) {
+  :root {
+    --header-height: 56px;
+  }
+
+  /* Header adjustments */
+  .app-header {
+    padding: 0 12px;
+  }
+  
+  .app-logo {
+    font-size: 20px;
+    gap: 4px;
+  }
+  
+  .nav-link {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  /* Club Directory adjustments */
+  .clubs-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .clubs-header button {
+    width: 100%;
+  }
+
+  .clubs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Modal adjustments */
+  .modal-overlay {
+    padding: 10px;
+  }
+  
+  .modal-content {
+    max-height: 96vh;
+    border-radius: 8px;
+  }
+  
+  .modal-header {
+    padding: 12px 16px;
+  }
+  
+  .modal-title {
+    font-size: 18px;
+  }
+  
+  .modal-body {
+    padding: 16px;
+  }
+  
+  .modal-footer {
+    padding: 12px 16px;
+  }
+
+  /* Join Section adjustments */
+  .join-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .join-info {
+    align-items: center;
+  }
+
+  /* Game Detail adjustments */
+  .detail-title {
+    font-size: 22px;
+  }
+
+  .detail-meta-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  /* Auth Card adjustments */
+  .auth-card {
+    padding: 24px 16px;
+    gap: 16px;
+  }
+  
+  .auth-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .app-logo {
+    font-size: 18px;
+  }
+
+  .nav-link {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .app-nav {
+    gap: 4px;
+  }
+}
