@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { gamesAPI, usersAPI } from '../utils';
+import { gamesAPI, usersAPI, formatCurrency } from '../utils';
 
 export default function GameDetail({ gameId, currentUser, onClose, onAuthRequired, onStateChange }) {
   const [game, setGame] = useState(null);
@@ -258,7 +258,7 @@ export default function GameDetail({ gameId, currentUser, onClose, onAuthRequire
                 </div>
                 <div className="meta-box">
                   <span className="meta-box-label">Cost</span>
-                  <span className="meta-box-value">{game.cost ? `£${game.cost.toFixed(2)}` : 'FREE'}</span>
+                  <span className="meta-box-value">{formatCurrency(game.cost)}</span>
                 </div>
               </div>
 

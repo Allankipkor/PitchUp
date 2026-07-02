@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import L from 'leaflet';
-import { gamesAPI } from '../utils';
+import { gamesAPI, formatCurrency } from '../utils';
 
 // Fix Leaflet marker icons in React imports
 delete L.Icon.Default.prototype._getIconUrl;
@@ -294,7 +294,7 @@ export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequire
                       {isFull ? '🚫 GAME FULL' : `🔥 ${game.spots_remaining} spots open`}
                     </span>
                     <span className="cost-display">
-                      {game.cost ? `£${game.cost.toFixed(2)}` : 'FREE'}
+                      {formatCurrency(game.cost)}
                     </span>
                   </div>
                 </div>

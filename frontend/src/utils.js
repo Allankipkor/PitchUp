@@ -142,3 +142,90 @@ export const inboxAPI = {
 export const geocodeAddress = (q) => {
   return apiFetch(`/geocode?q=${encodeURIComponent(q)}`);
 };
+
+// --- Currency Helpers ---
+
+const localeCurrencyMap = {
+  'en-GB': 'GBP',
+  'en-US': 'USD',
+  'en-KE': 'KES',
+  'sw-KE': 'KES',
+  'en-NG': 'NGN',
+  'en-ZA': 'ZAR',
+  'en-CA': 'CAD',
+  'en-AU': 'AUD',
+  'en-NZ': 'NZD',
+  'en-IN': 'INR',
+  'hi-IN': 'INR'
+};
+
+export function getLocalCurrencyCode() {
+  const locale = navigator.language || 'en-GB';
+  if (localeCurrencyMap[locale]) {
+    return localeCurrencyMap[locale];
+  }
+  const parts = locale.split('-');
+  if (parts.length > 1) {
+    const country = parts[1].toUpperCase();
+    const countryMap = {
+      'GB': 'GBP',
+      'US': 'USD',
+      'KE': 'KES',
+      'NG': 'NGN',
+      'ZA': 'ZAR',
+      'CA': 'CAD',
+      'AU': 'AUD',
+      'NZ': 'NZD',
+      'IN': 'INR',
+      'DE': 'EUR',
+      'FR': 'EUR',
+      'IT': 'EUR',
+      'ES': 'EUR',
+      'NL': 'EUR',
+      'BE': 'EUR',
+      'IE': 'EUR'
+    };
+    if (countryMap[country]) {
+      return countryMap[country];
+    }
+  }
+  const euroLanguages = ['de', 'fr', 'it', 'es', 'nl', 'pt', 'el', 'fi', 'ga'];
+  if (euroLanguages.includes(parts[0].toLowerCase())) {
+    return 'EUR';
+  }
+  return 'GBP';
+}
+
+export function getLocalCurrencySymbol() {
+  const currencyCode = getLocalCurrencyCode();
+  const locale = navigator.language || 'en-GB';
+  try {
+    const formatter = new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: currencyCode,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    });
+    const parts = formatter.formatToParts(0);
+    const currencyPart = parts.find(part => part.type === 'currency');
+    return currencyPart ? currencyPart.value : '£';
+  } catch (e) {
+    return '£';
+  }
+}
+
+export function formatCurrency(amount) {
+  if (amount === 0 || amount === null || amount === undefined) {
+    return 'FREE';
+  }
+  const currencyCode = getLocalCurrencyCode();
+  const locale = navigator.language || 'en-GB';
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: currencyCode
+    }).format(amount);
+  } catch (e) {
+    return `£${amount.toFixed(2)}`;
+  }
+}

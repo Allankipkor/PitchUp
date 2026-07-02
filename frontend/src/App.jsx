@@ -216,6 +216,40 @@ export default function App() {
         )}
       </main>
 
+      {/* BOTTOM MOBILE NAV BAR */}
+      <nav className="app-bottom-nav">
+        <button 
+          className={`bottom-nav-link ${activeTab === 'browse' ? 'active' : ''}`}
+          onClick={() => setActiveTab('browse')}
+        >
+          <span className="bottom-nav-icon">🗺️</span>
+          <span className="bottom-nav-label">Browse</span>
+        </button>
+        <button 
+          className={`bottom-nav-link ${activeTab === 'clubs' ? 'active' : ''}`}
+          onClick={() => setActiveTab('clubs')}
+        >
+          <span className="bottom-nav-icon">🛡️</span>
+          <span className="bottom-nav-label">Clubs</span>
+        </button>
+        <button 
+          className={`bottom-nav-link ${activeTab === 'inbox' ? 'active' : ''}`}
+          onClick={() => {
+            if (!currentUser) {
+              setActiveTab('auth');
+            } else {
+              setActiveTab('inbox');
+            }
+          }}
+        >
+          <span className="bottom-nav-icon">
+            📥
+            {unreadCount > 0 && <span className="bottom-nav-badge">{unreadCount}</span>}
+          </span>
+          <span className="bottom-nav-label">Inbox</span>
+        </button>
+      </nav>
+
       {/* FLOATING MODALS */}
       
       {/* 1. Game Details Modal */}

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import L from 'leaflet';
-import { gamesAPI, geocodeAddress } from '../utils';
+import { gamesAPI, geocodeAddress, getLocalCurrencySymbol } from '../utils';
 
 export default function PostGameForm({ onClose, onGameCreated, onAuthRequired, currentUser }) {
   const [title, setTitle] = useState('');
@@ -204,7 +204,7 @@ export default function PostGameForm({ onClose, onGameCreated, onAuthRequired, c
                     />
                   </div>
                   <div>
-                    <label className="form-label">Cost per Player (£)</label>
+                    <label className="form-label">Cost per Player ({getLocalCurrencySymbol()})</label>
                     <input 
                       type="number" 
                       className="form-input"
