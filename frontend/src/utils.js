@@ -1,14 +1,16 @@
-let API_BASE = import.meta.env.VITE_API_URL;
-
-if (!API_BASE) {
-  const isCapacitor = typeof window !== 'undefined' && (!!window.Capacitor || !!window.webkit?.messageHandlers?.Capacitor);
-  
-  // If running in production (Vercel) OR inside the native mobile app wrapper
-  if (isCapacitor || (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')) {
-    API_BASE = 'https://pitchup-yc95.onrender.com/api';
-  } else {
-    API_BASE = 'http://localhost:8000/api';
+export function getApiBase() {
+  let base = import.meta.env.VITE_API_URL;
+  if (!base) {
+    const isCapacitor = typeof window !== 'undefined' && (!!window.Capacitor || !!window.webkit?.messageHandlers?.Capacitor);
+    
+    // If running in production (Vercel) OR inside the native mobile app wrapper
+    if (isCapacitor || (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')) {
+      base = 'https://pitchup-yc95.onrender.com/api';
+    } else {
+      base = 'http://localhost:8000/api';
+    }
   }
+  return base;
 }
 
 
@@ -17,7 +19,8 @@ if (!API_BASE) {
  * and formats JSON payloads and query parameters.
  */
 export async function apiFetch(endpoint, options = {}) {
-  const url = endpoint.startsWith('http') ? endpoint : `${API_BASE}${endpoint}`;
+  const base = getApiBase();
+  const url = endpoint.startsWith('http') ? endpoint : `${base}${endpoint}`;
   
   // Force credentials to be included for secure httpOnly cookie authentication!
   options.credentials = 'include';
