@@ -1,13 +1,15 @@
 export function getApiBase() {
   let base = import.meta.env.VITE_API_URL;
   if (!base) {
-    const isCapacitor = typeof window !== 'undefined' && (!!window.Capacitor || !!window.webkit?.messageHandlers?.Capacitor);
-    
-    // If running in production (Vercel) OR inside the native mobile app wrapper
-    if (isCapacitor || (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')) {
-      base = 'https://pitchup-yc95.onrender.com/api';
-    } else {
+    // Vite dev server runs on a port (e.g. 5173). Native apps and Vercel do not have a port.
+    const isLocalDev = typeof window !== 'undefined' && 
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && 
+      window.location.port !== '';
+      
+    if (isLocalDev) {
       base = 'http://localhost:8000/api';
+    } else {
+      base = 'https://pitchup-yc95.onrender.com/api';
     }
   }
   return base;
