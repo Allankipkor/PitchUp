@@ -19,7 +19,8 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="PitchUp API", version="1.0.0")
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173").rstrip("/")
+print(f"CORS Allowed Origin: {FRONTEND_URL}")
 
 # CORS Setup - Enable credentials for httpOnly cookies!
 app.add_middleware(
