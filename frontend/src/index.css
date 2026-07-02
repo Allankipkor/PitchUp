@@ -1359,3 +1359,71 @@ button, input, select, textarea {
     height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   }
 }
+
+/* Custom Premium Dark Leaflet Popups */
+.leaflet-popup-content-wrapper {
+  background: rgba(20, 20, 20, 0.95) !important;
+  border: 1px solid var(--accent) !important;
+  box-shadow: var(--shadow-neon-intense) !important;
+  color: var(--text-primary) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(20, 20, 20, 0.95) !important;
+  border-left: 1px solid var(--accent) !important;
+  border-bottom: 1px solid var(--accent) !important;
+}
+
+.leaflet-popup-close-button {
+  color: var(--text-secondary) !important;
+}
+
+.leaflet-popup-close-button:hover {
+  color: var(--accent) !important;
+}
+
+/* Custom Premium Dark Leaflet Layer Control */
+.leaflet-control-layers {
+  background-color: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body) !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+  padding: 6px 10px !important;
+}
+
+.leaflet-control-layers-expanded {
+  background-color: var(--bg-secondary) !important;
+  border: 1px solid var(--accent) !important;
+  box-shadow: var(--shadow-neon) !important;
+}
+
+.leaflet-control-layers label {
+  cursor: pointer !important;
+  margin-bottom: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.leaflet-control-layers input[type="radio"] {
+  accent-color: var(--accent) !important;
+  cursor: pointer !important;
+}
+
+/* Smooth Scrolling across scrollable containers */
+html, body {
+  scroll-behavior: smooth;
+}
+
+.sidebar-container, 
+.modal-body, 
+.comments-list, 
+.notifications-list, 
+.clubs-grid {
+  scroll-behavior: smooth;
+}

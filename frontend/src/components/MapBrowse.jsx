@@ -38,12 +38,36 @@ export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequire
         zoomControl: true,
       }).setView([defaultLat, defaultLng], 12);
       
-      // Use CartoDB Dark Matter tile layer for the premium sporty dark mode feel!
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      // Define different tile layers
+      const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 20
-      }).addTo(map);
+      });
+
+      const streetMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+      });
+
+      const satelliteHybrid = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+        attribution: '&copy; Google Maps',
+        maxZoom: 20
+      });
+
+      // Add default dark mode map on start
+      darkMap.addTo(map);
+
+      // Create base layers object for selection
+      const baseMaps = {
+        "🌌 Dark Mode": darkMap,
+        "🗺️ Streets & Buildings": streetMap,
+        "🛰️ Satellite Hybrid": satelliteHybrid
+      };
+
+      // Add Layer Control switcher in the top-left
+      L.control.layers(baseMaps, null, { position: 'topleft' }).addTo(map);
 
       markersGroup.current = L.layerGroup().addTo(map);
       mapInstance.current = map;
@@ -96,14 +120,14 @@ export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequire
         // Customize marker behavior
         const marker = L.marker([game.latitude, game.longitude])
           .bindPopup(`
-            <div style="font-family: 'Inter', sans-serif; color: #000; padding: 4px;">
-              <strong style="display:block; font-size:14px; font-family: 'Oswald', sans-serif; text-transform:uppercase;">${game.title}</strong>
-              <span style="font-size:11px; color:#555;">${game.format} • ${game.skill_level}</span>
-              <div style="margin-top:6px; display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-family: 'Inter', sans-serif; padding: 4px;">
+              <strong style="display:block; font-size:14px; font-family: 'Oswald', sans-serif; text-transform:uppercase; margin-bottom: 2px;">${game.title}</strong>
+              <span style="font-size:11px; color: var(--text-secondary);">${game.format} • ${game.skill_level}</span>
+              <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; gap: 8px;">
                 <span style="font-weight:bold; font-size:12px; color: ${game.spots_remaining === 0 ? '#ff3b30' : '#34c759'}">
                   ${game.spots_remaining === 0 ? 'Full' : `${game.spots_remaining} left`}
                 </span>
-                <button class="popup-view-details-btn" data-game-id="${game.id}" style="background:#bfff00; border:none; padding:4px 8px; font-weight:bold; font-size:11px; cursor:pointer; border-radius:3px; font-family: 'Oswald', sans-serif; text-transform:uppercase;">
+                <button class="popup-view-details-btn" data-game-id="${game.id}" style="background:#bfff00; border:none; padding:4px 8px; font-weight:bold; font-size:11px; cursor:pointer; border-radius:3px; font-family: 'Oswald', sans-serif; text-transform:uppercase; color: #000;">
                   View Details
                 </button>
               </div>
