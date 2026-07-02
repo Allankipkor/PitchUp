@@ -19,13 +19,19 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="PitchUp API", version="1.0.0")
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173").rstrip("/")
-print(f"CORS Allowed Origin: {FRONTEND_URL}")
+FRONTEND_URL_ENV = os.getenv("FRONTEND_URL", "")
+allowed_origins = [url.strip().rstrip("/") for url in FRONTEND_URL_ENV.split(",") if url.strip()]
+
+# Always allow local development URL
+if "http://localhost:5173" not in allowed_origins:
+    allowed_origins.append("http://localhost:5173")
+
+print(f"CORS Allowed Origins: {allowed_origins}")
 
 # CORS Setup - Enable credentials for httpOnly cookies!
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
