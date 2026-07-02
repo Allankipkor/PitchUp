@@ -129,7 +129,7 @@ def request_magic_link(payload: schemas.MagicLinkRequest, db: Session = Depends(
     # Generate link
     token = auth.create_magic_link_token(payload.email)
     auth.send_magic_link_email(payload.email, token)
-    return {"message": "Magic link sent successfully. Please check your inbox or server logs."}
+    return {"message": "Magic link sent successfully. Please check your inbox."}
 
 # Resolve cookie security values for cross-domain auth (Vercel to Render)
 # Production requires SameSite=None and Secure=True for cross-origin cookies to work

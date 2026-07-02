@@ -1265,6 +1265,18 @@ button, input, select, textarea {
   .auth-title {
     font-size: 20px;
   }
+
+  /* Profile Button adjustments */
+  .profile-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+    max-width: 95px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block; /* Enables text-overflow: ellipsis */
+    text-align: center;
+  }
 }
 
 @media (max-width: 400px) {
@@ -1279,5 +1291,41 @@ button, input, select, textarea {
   
   .app-nav {
     gap: 4px;
+  }
+}
+
+/* Floating host game button on Map */
+.floating-add-game-btn {
+  display: none; /* Hidden on desktop */
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: var(--accent);
+  color: #000;
+  border: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: var(--shadow-neon-intense);
+  transition: all var(--transition-speed);
+  justify-content: center;
+  align-items: center;
+}
+
+.floating-add-game-btn:hover {
+  background-color: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.floating-add-game-btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .floating-add-game-btn {
+    display: flex; /* Show only on mobile screens */
   }
 }

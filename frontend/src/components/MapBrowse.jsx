@@ -310,6 +310,9 @@ export default function MapBrowse({ onSelectGame, triggerPostGame, onAuthRequire
         <button className="near-me-btn" onClick={() => locateUser(true)}>
           🎯 Near Me
         </button>
+        <button className="floating-add-game-btn" onClick={triggerPostGame} title="Host Pickup Game">
+          ➕
+        </button>
       </div>
 
       {/* Mobile Toggle Bar */}
