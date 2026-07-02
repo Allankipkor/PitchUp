@@ -10,7 +10,6 @@ import PostGameForm from './components/PostGameForm';
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [activeTab, setActiveTab] = useState('browse'); // 'browse', 'clubs', 'inbox', 'auth'
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   // Modal toggles
   const [selectedGameId, setSelectedGameId] = useState(null);
@@ -134,7 +133,7 @@ export default function App() {
   };
 
   return (
-    <div className={`app-container ${activeTab === 'browse' ? 'hide-header-mobile' : ''}`}>
+    <div className="app-container">
       {/* HEADER */}
       <header className="app-header">
         <div className="app-logo" onClick={() => setActiveTab('browse')} style={{ cursor: 'pointer' }}>
@@ -216,81 +215,6 @@ export default function App() {
           />
         )}
       </main>
-
-
-
-
-      {/* FLOATING HAMBURGER MENU FOR MOBILE BROWSE VIEW */}
-      {activeTab === 'browse' && (
-        <button 
-          className="mobile-hamburger-btn" 
-          onClick={() => setMobileMenuOpen(true)}
-          aria-label="Open Navigation Menu"
-        >
-          ☰
-        </button>
-      )}
-
-      {/* MOBILE NAVIGATION MENU OVERLAY */}
-      {mobileMenuOpen && (
-        <div className="mobile-nav-overlay" onClick={() => setMobileMenuOpen(false)}>
-          <div className="mobile-nav-menu" onClick={(e) => e.stopPropagation()}>
-            <div className="mobile-nav-header">
-              <div className="app-logo">
-                PITCH<span className="logo-accent">UP</span>⚽
-              </div>
-              <button className="btn-close" onClick={() => setMobileMenuOpen(false)}>×</button>
-            </div>
-            <div className="mobile-nav-body">
-              <button 
-                type="button"
-                className={`mobile-nav-item ${activeTab === 'browse' ? 'active' : ''}`}
-                onClick={() => { setActiveTab('browse'); setMobileMenuOpen(false); }}
-              >
-                🗺️ Browse Games
-              </button>
-              <button 
-                type="button"
-                className={`mobile-nav-item ${activeTab === 'clubs' ? 'active' : ''}`}
-                onClick={() => { setActiveTab('clubs'); setMobileMenuOpen(false); }}
-              >
-                🛡️ Club Directory
-              </button>
-              <button 
-                type="button"
-                className={`mobile-nav-item ${activeTab === 'inbox' ? 'active' : ''}`}
-                onClick={() => { 
-                  if (!currentUser) {
-                    setActiveTab('auth');
-                  } else {
-                    setActiveTab('inbox');
-                  }
-                  setMobileMenuOpen(false); 
-                }}
-              >
-                📥 Inbox {unreadCount > 0 && <span className="bottom-nav-badge" style={{ position: 'static', marginLeft: '6px' }}>{unreadCount}</span>}
-              </button>
-              
-              <div style={{ marginTop: 'auto', paddingTop: '20px', borderTop: '1px solid var(--border-color)' }}>
-                {currentUser ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    <button type="button" className="profile-btn-mobile" onClick={() => { setShowProfileModal(true); setMobileMenuOpen(false); }}>
-                      👤 {currentUser.name} (Settings)
-                    </button>
-                    <button type="button" className="btn-cancel" onClick={() => { handleLogout(); setMobileMenuOpen(false); }} style={{ borderColor: 'var(--danger)', color: 'var(--danger)', width: '100%' }}>
-                      Log Out
-                    </button>
-                  </div>
-                ) : (
-                  <button type="button" className="btn-submit" onClick={() => { setActiveTab('auth'); setMobileMenuOpen(false); }} style={{ width: '100%' }}>
-                    Sign In
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* FLOATING MODALS */}
       
