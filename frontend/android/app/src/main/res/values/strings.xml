@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PitchUp</string>
+    <string name="title_activity_main">PitchUp</string>
+    <string name="package_name">com.pitchup.app</string>
+    <string name="custom_url_scheme">com.pitchup.app</string>
+</resources>
