@@ -172,8 +172,13 @@ button, input, select, textarea {
 
 .map-container-wrapper {
   flex: 1;
-  height: 100%;
+  height: calc(100% - 32px);
+  margin: 16px;
   position: relative;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
 }
 
 .leaflet-container {
@@ -1150,7 +1155,10 @@ button, input, select, textarea {
   
   .map-container-wrapper {
     flex: 1;
-    height: 100%;
+    height: calc(100% - 16px - env(safe-area-inset-bottom));
+    margin: 8px 8px calc(8px + env(safe-area-inset-bottom)) 8px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
   }
 
   .mobile-view-toggle {
@@ -1355,11 +1363,13 @@ button, input, select, textarea {
   }
 
   .near-me-btn {
-    bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+    bottom: 16px !important;
+    left: 16px !important;
   }
 
   .floating-add-game-btn {
-    bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+    bottom: 16px !important;
+    right: 16px !important;
   }
 
   /* Ensure touch target sizes on mobile are at least 44px */
