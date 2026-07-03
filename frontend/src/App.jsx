@@ -165,10 +165,7 @@ export default function App() {
       {/* HEADER */}
       <header className="app-header">
         <div className="app-logo" onClick={() => setActiveTab('browse')} style={{ cursor: 'pointer' }}>
-          PITCH<span className="logo-accent">UP</span>
-          <svg viewBox="0 0 512 512" className="logo-ball">
-            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm-64-288l64-48 64 48-24 72h-80l-24-72zm184 104l-40-56 32-80 56 40c8 32 8 64-48 96zM72 176l56-40 32 80-40 56C64 240 64 208 72 176zm184 200l-64-48 24-72h80l24 72-64 48zm120-144l-40 56h-80l-40-56 64-48 96 48zM96 288l40-56 56 40-32 80-64-64zm320 0l-64 64-32-80 56-40 40 56z"/>
-          </svg>
+          PITCH<span className="logo-accent">UP</span>⚽
         </div>
         
         <nav className="app-nav">
