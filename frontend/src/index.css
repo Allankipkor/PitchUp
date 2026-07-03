@@ -106,6 +106,19 @@ button, input, select, textarea {
   text-shadow: var(--shadow-neon);
 }
 
+.logo-ball {
+  width: 24px;
+  height: 24px;
+  fill: var(--text-primary);
+  display: inline-block;
+  margin-left: 2px;
+  transition: fill var(--transition-speed);
+}
+
+.app-logo:hover .logo-ball {
+  fill: var(--accent);
+}
+
 .app-nav {
   display: flex;
   gap: 8px;
@@ -1220,6 +1233,11 @@ button, input, select, textarea {
     gap: 4px;
   }
   
+  .logo-ball {
+    width: 18px;
+    height: 18px;
+  }
+  
   .nav-link {
     font-size: 13px;
     padding: 6px 10px;
@@ -1315,6 +1333,11 @@ button, input, select, textarea {
 @media (max-width: 400px) {
   .app-logo {
     font-size: 18px;
+  }
+
+  .logo-ball {
+    width: 16px;
+    height: 16px;
   }
 
   .nav-link {
